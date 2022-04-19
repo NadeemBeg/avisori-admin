@@ -1,0 +1,487 @@
+
+<html lang="en" style="height: auto;"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Avisori</title>
+    
+    <!-- Google Font: Source Sans Pro -->
+   
+    <link rel="js" href="../middleware/ssn.js">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" /> -->
+
+
+  </head>
+  <body class="sidebar-mini" style="height: auto;">
+  <div class="wrapper">
+    <%- include('sidebar.ejs'); %>    
+  
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="min-height: 1299.69px;">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><%= advisorDetails.firstName %> <%= advisorDetails.lastName %></h1>
+              <div>
+                <button style="margin-top: 10px;" class="btn btn-primary"><a style="color: white;" href="/advisors"><i style="margin-right: 5px;" class="fas fa-angle-left right"></i>Back</a></button>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Advisor</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <!-- <h3 class="card-title">DataTable with minimal features &amp; hover style</h3> -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6"></div>
+                            <div class="col-sm-12 col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form action="/advisors" method="POST" onsubmit="return validateform()" name="myform" enctype="multipart/form-data">
+
+                                    <input readonly hidden type="text" name="id" placeholder="id" value="<%= advisorDetails._id %>">
+
+                                    <label>Profile Pic</label>
+                                    <br/>
+                                    <img height="50" id="imgCheck" name="image" width="50" src="<%= advisorDetails.profilePic %>"/>
+                                    <input style="border: none;padding-left: 0; margin-top: 10px; margin-bottom: 5px;"  type="file" id="imgCheck2" class="form-control" name="profilePic" accept="image/*">  
+                                    <br />
+                                    <label class="tagName">Bank ID</label>
+                                    <input class="form-control" type="text" id="bankId" name="bankId" placeholder="bankId" value="<%= advisorDetails.bankId %>">
+
+                                    <!-- <label class="tagName">Email</label>
+                                    <input type="email" class="form-control" name="email" placeholder="email" value="<%= advisorDetails.email %>"> -->
+                                    <br />
+                                    <label class="tagName">First Name</label>
+                                    <input type="text" class="form-control" name="firstName" placeholder="firstName" value="<%= advisorDetails.firstName %>">
+                                    <br />
+                                    <label class="tagName">Last Name</label>
+                                    <input type="text" class="form-control" name="lastName" placeholder="lastName" value="<%= advisorDetails.lastName %>">
+                                    
+                                    <% if (advisorDetails == '') { %>
+                                      <br />
+                                      <div>
+                                        <label class="tagName">Language</label>
+                                        <select class="selectpicker" name="languages" multiple data-live-search="true">
+                                          <% languageDetails.forEach(function( eachlanguage, index){ %>
+                                            <option value=<%= eachlanguage._id %>><%= eachlanguage.name %></option>
+                                          <% }) %>
+                                        </select>
+                                      </div>
+                                      
+                                      <br />
+                                      <div>
+                                        <label class="tagName">Expertise</label>
+                                        <select class="selectpicker" name="speciality" multiple data-live-search="true">
+                                          <% subCategoryDetails.forEach(function( eachsubcategory, index){ %>
+                                            <option  value=<%= eachsubcategory._id %>><%= eachsubcategory.name %></option>                                                                   
+                                          <% }) %>
+                                        </select>
+                                      </div>
+                                     
+                                    <%} else { %>
+                                      <br/>
+                                      <div>
+                                        <label class="tagName">Language</label>
+                                        <select class="selectpicker" name="languages" multiple data-live-search="true">
+                                          <% languageDetails.forEach(function( eachlanguage, index){ %>
+                                            <% advisorDetails.languages.forEach(function(selectedLang,index){ %>
+                                              <% if (eachlanguage._id == selectedLang ) { %>
+                                                <option selected value=<%= eachlanguage._id %>><%= eachlanguage.name %></option>
+                                              <%} else { %>
+                                                <option  value=<%= eachlanguage._id %>><%= eachlanguage.name %></option>
+                                              <% } %> 
+                                            <% }) %>
+                                          <% }) %>
+                                        </select>
+                                      </div>
+                                      <br />
+                                      <div>
+                                        <label class="tagName">Expertise</label>
+                                        <select class="selectpicker" name="speciality" multiple data-live-search="true">
+                                          <% subCategoryDetails.forEach(function( eachsubcategory, index){ %>
+                                            <% advisorDetails.speciality.forEach(function(selectedSC,index){ %>
+                                                <% if (eachsubcategory._id == selectedSC ) { %>
+                                                  <option  selected value=<%= eachsubcategory._id %>><%= eachsubcategory.name %></option>
+                                                <%} else { %>
+                                                  <option  value=<%= eachsubcategory._id %>><%= eachsubcategory.name %></option>
+                                                <% } %>     
+                                              <% }) %>                                                                   
+                                          <% }) %>
+                                        </select>
+                                      </div>
+                                      
+                                    <% } %> 
+                                    <br />
+                                    <div>
+                                      <label class="tagName">Company</label>
+                                      <select class="selectpicker" name="companyId" data-live-search="true">
+                                        <% compnayDetails.forEach(function( eachcompany, index){ %>
+                                          <option value=<%= eachcompany._id %>><%= eachcompany.title %></option>
+                                        <% }) %>
+                                      </select>
+                                    </div>
+                                    
+                                    <br />
+                                    <label class="tagName">Advisor Type</label>
+                                    <input type="text" class="form-control" name="advisorType" placeholder="advisorType" value="<%= advisorDetails.advisorType %>">
+                                    <br />
+                                    <label class="tagName">Description</label>
+                                    <input type="text" class="form-control" name="description" placeholder="description" value="<%= advisorDetails.description %>">
+                                    <br />
+                                    <button class="submitBtn btn btn-success" type="submit" value="submit">Submit</button>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <!-- /.card-body -->
+                </div>
+              <!-- /.card -->
+  
+              
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('footer.ejs'); %>  
+  
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark" style="display: none;">
+      <!-- Control sidebar content goes here -->
+    <div class="p-3 control-sidebar-content" style=""><h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Dark Mode</span></div><h6>Header Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Dropdown Legacy Offset</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>No border</span></div><h6>Sidebar Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Collapsed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" checked="checked" class="mr-1"><span>Sidebar Mini</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini MD</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini XS</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Flat Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Legacy Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Hide on Collapse</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Disable Hover/Focus Auto-Expand</span></div><h6>Footer Options</h6><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><h6>Small Text Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Body</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Navbar</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Brand</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Nav</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Footer</span></div><h6>Navbar Variants</h6><div class="d-flex"><select class="custom-select mb-3 text-light border-0 bg-white"><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option></select></div><h6>Accent Color Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 text-light border-0 bg-primary"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Light Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Brand Logo Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option><a href="#">clear</a></select></div></aside>
+    <!-- /.control-sidebar -->
+  <div id="sidebar-overlay"></div></div>
+  <!-- ./wrapper -->
+  
+  <!-- jQuery -->
+    
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../plugins/jszip/jszip.min.js"></script>
+  <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <!-- <script src="../../dist/js/ssn.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+  <script>
+    
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+    $(document).ready(function() {
+      $('select').selectpicker();
+    });
+
+    $(function() {
+      var id = $("input[name='id']").val();
+      if(id == null || id == "" || id == undefined){
+        $("form[name='myform']").validate({
+        rules: {
+          firstName:{
+            required:true,
+            minlength:3
+          },
+          lastName:{
+            required:true,
+            minlength:3
+          },
+          description:{
+            required:true,
+            minlength:3
+          },
+          languages:{
+            required:true,
+          },
+          speciality:{
+            required:true
+          },
+          companyId:{
+            required:true
+          },
+          advisorType:{
+            required:true
+          },
+          profilePic:{
+            required: true
+          },
+          bankId:{
+            required: true,
+            remote: {
+              type: 'post',
+              url: '/middleware/checkBankId',
+              data: {
+                bankId: function() {
+                  return $( "#bankId" ).val();
+                }
+              },
+              dataType: 'json',
+            }
+          }
+          
+        },
+        messages: {
+          firstName:{
+            required: "Please enter your firstname",
+            minlength: "Minimam Lenght is 3"
+          },
+          lastName:{
+            required: "Please enter your lastname",
+            minlength: "Minimam Lenght is 3"
+          },
+          bankId:{
+            required:"Please enter your SSN Number.",
+            remote:"test123"
+          },
+          description:{
+            required: "Please enter your Description",
+            minlength: "Minimam Lenght is 3"
+          },
+          languages:{
+            required: "Please Select Your Languages",
+          },
+          speciality:{
+            required: "Please Select Expertise",
+          },
+          companyId:{
+            required: "Please Select Your Company",
+          },
+          advisorType:{
+            required: "Please Enter Advisor Type",
+          },
+          profilePic:{
+            required: "Please Upload Image"
+          }
+        },
+        // submitHandler: function(form) {
+        //   form.submit();
+        // }
+      });
+      }
+      else{
+        $("form[name='myform']").validate({
+        rules: {
+          firstName:{
+            required:true,
+            minlength:3
+          },
+          lastName:{
+            required:true,
+            minlength:3
+          },
+          description:{
+            required:true,
+            minlength:3
+          },
+          languages:{
+            required:true,
+          },
+          speciality:{
+            required:true
+          },
+          companyId:{
+            required:true
+          },
+          advisorType:{
+            required:true
+          },
+          bankId:{
+            required: true,
+            remote: {
+              type: 'post',
+              url: '/middleware/checkBankId',
+              data: {
+                bankId: function() {
+                  return $( "#bankId" ).val();
+                }
+              },
+              dataType: 'json',
+            }
+          }
+          
+        },
+        messages: {
+          firstName:{
+            required: "Please enter your firstname",
+            minlength: "Minimam Lenght is 3"
+          },
+          lastName:{
+            required: "Please enter your lastname",
+            minlength: "Minimam Lenght is 3"
+          },
+          bankId:{
+            required:"Please enter your SSN Number.",
+            // remote: jQuery.validator.format("{0} is already taken.")
+            remote:"test123"
+          },
+          description:{
+            required: "Please enter your Description",
+            minlength: "Minimam Lenght is 3"
+          },
+          languages:{
+            required: "Please Select Your Languages",
+          },
+          speciality:{
+            required: "Please Select Expertise",
+          },
+          companyId:{
+            required: "Please Select Your Company",
+          },
+          advisorType:{
+            required: "Please Enter Advisor Type",
+          },
+        },
+        // submitHandler: function(form) {
+        //   form.submit();
+        // }
+      });
+      }
+    // Initialize form validation on the registration form.
+    // It has the name attribute "registration"
+      
+    });
+
+
+
+    // console.log("vaibhav",isValid.test(123654));
+    // function validateform(){  
+    //   const isValid = /^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([-|+]{0,1})?(\d{3})(\d{0,1})$/;
+    //   var firstName=document.myform.firstName.value;
+    //   var lastName=document.myform.lastName.value;
+    //   var bankId = document.myform.bankId.value;
+    //   var elem = document.getElementById("imgCheck");
+    //   var elem2 = document.getElementById("imgCheck2").value;
+    //   console.log("bankId",bankId);
+    //   if(elem.getAttribute('src') == "" && elem2  == "")
+    //   {
+    //     alert("Please Choose image");
+    //     return false;  
+    //   }
+    //   if(firstName.length < 3){
+    //       alert('First Name you have provide is invalid.');
+    //       return false;
+    //   }
+    //   if(lastName.length < 3){
+    //       alert('Last Name you have provide is invalid.');
+    //       return false;
+    //   }
+    //   if(!isValid.test(bankId)){
+    //     alert('SSN you have provide is invalid.');
+    //     return false;
+    //   }
+    //   $.ajax({
+		// 		type: 'GET',
+		// 		url: '/advisors/checkBankId/' + bankId,
+		// 		jsonp: 'callback',
+		// 		dataType: 'json',
+		// 		success: function(data) {
+    //       console.log("data",data);
+    //       if(data === "Done"){
+    //         return true
+    //       }
+    //       else{
+    //         alert(data);
+    //         return false;
+    //       }
+    //     },
+    //   });
+    // }
+  </script>
+  <style>
+      .caret{
+        display: none;
+      }
+      .selectpicker{
+        width: 100%;
+      }
+      input{
+        width: 50%;
+        /* border-style: unset; */
+        padding-left: 10px;
+      }
+      /* .tagName{
+        padding-top: 30px;
+      } */
+      .submitBtn{
+        /* margin-top: 10px;
+        color: white; */
+        /* background-color: #6b8773;
+        border-color: #6b8773; */
+      }
+      .error{
+        color: red;
+        font-weight: 100 !important;
+      }
+  </style>
+  
+  </body></html>

@@ -1,0 +1,10 @@
+var express = require('express');
+var router = express.Router();
+const introData = require("../controllers/getIntroData");
+const {verifyAuth} = require('../middleware/auth');
+router.get('/',verifyAuth,introData.introDataDetails);
+router.get('/edit/:id',verifyAuth,introData.introDataEdit);
+router.post('/',verifyAuth,introData.introDataSave);
+router.get('/delete/:id',verifyAuth,introData.introDataDelete);
+router.get('/create',verifyAuth,introData.introDataCreate);
+module.exports = router;

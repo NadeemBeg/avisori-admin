@@ -1,0 +1,11 @@
+var express = require('express');
+var router = express.Router();
+const companies = require("../controllers/companies");
+const {verifyAuth} = require('../middleware/auth');
+router.get('/',verifyAuth,companies.allCompanies);
+router.post('/',verifyAuth,companies.addCompany);
+router.get('/view/:id',verifyAuth,companies.companyView);
+router.get('/edit/:id',verifyAuth,companies.companyView);
+router.get('/delete/:id',verifyAuth,companies.deleteCompany);
+router.get('/create',verifyAuth,companies.companyCreate);
+module.exports = router;

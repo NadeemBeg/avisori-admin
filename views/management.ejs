@@ -1,0 +1,212 @@
+<html lang="en" style="height: auto;"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Avisori</title>
+  
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  </head>
+  <body class="sidebar-mini" style="height: auto;">
+  <div class="wrapper">
+    <%- include('sidebar.ejs'); %>    
+  
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="min-height: 1299.69px;">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Advisor Type Table</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Advisor Type Table</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <!-- <h3 class="card-title">DataTable with minimal features &amp; hover style</h3> -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                    <thead>
+                    <tr role="row">
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">S.No.</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Title</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Status</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Delete button: activate to sort column ascending">Delete</th>
+                    </tr>
+                    </thead>
+                    <button  class="btn btn-primary"><a style="color: #ffffff;" href="/management/create">Create</a></button>
+                    <tbody>
+                      <% AdvisorTypeList.forEach(function( eachPerson, index){ %>
+                        <tr class="">
+                          <td class="dtr-control sorting_1" tabindex="0"><%= index+1 %></td>
+                          <td><%= eachPerson.title %></td>
+                          <td><%= eachPerson.status %></td>
+                          <td>
+                            <button  class="btn btn-success"><a style="color: #ffffff;" href="/management/edit/<%= eachPerson._id %>">Edit</a></button>
+                            <button  class="btn btn-danger"><a style="color: #ffffff;" href="/management/delete/<%= eachPerson._id %>">Delete</a></button>
+                            </td>
+                              <!-- <button style="background-color: red; color: white;">Delete</button> <i class="fas fa-trash-alt"></i></td> -->
+                        </tr>
+                      <% }) %>
+  
+                    <!-- <tr class="">
+                      <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
+                      <td>Firefox 1.0</td>
+                      <td>Win 98+ / OSX.2+</td>
+                      <td>1.7</td>
+                      <td>A</td>
+                    </tr><tr class="">
+                      <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
+                      <td>Firefox 1.5</td>
+                      <td>Win 98+ / OSX.2+</td>
+                      <td>1.8</td>
+                      <td>A</td>
+                    </tr><tr class="">
+                      <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
+                      <td>Firefox 2.0</td>
+                      <td>Win 98+ / OSX.2+</td>
+                      <td>1.8</td>
+                      <td>A</td>
+                    </tr><tr class="">
+                      <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
+                      <td>Firefox 3.0</td>
+                      <td>Win 2k+ / OSX.3+</td>
+                      <td>1.9</td>
+                      <td>A</td>
+                    </tr><tr class="">
+                      <td class="sorting_1 dtr-control">Gecko</td>
+                      <td>Camino 1.0</td>
+                      <td>OSX.2+</td>
+                      <td>1.8</td>
+                      <td>A</td>
+                    </tr><tr class="even">
+                      <td class="sorting_1 dtr-control">Gecko</td>
+                      <td>Camino 1.5</td>
+                      <td>OSX.3+</td>
+                      <td>1.8</td>
+                      <td>A</td>
+                    </tr><tr class="odd">
+                      <td class="sorting_1 dtr-control">Gecko</td>
+                      <td>Netscape 7.2</td>
+                      <td>Win 95+ / Mac OS 8.6-9.2</td>
+                      <td>1.7</td>
+                      <td>A</td>
+                    </tr><tr class="even">
+                      <td class="sorting_1 dtr-control">Gecko</td>
+                      <td>Netscape Browser 8</td>
+                      <td>Win 98SE+</td>
+                      <td>1.7</td>
+                      <td>A</td>
+                    </tr><tr class="odd">
+                      <td class="sorting_1 dtr-control">Gecko</td>
+                      <td>Netscape Navigator 9</td>
+                      <td>Win 98+ / OSX.2+</td>
+                      <td>1.8</td>
+                      <td>A</td>
+                    </tr><tr class="even">
+                      <td class="sorting_1 dtr-control">Gecko</td>
+                      <td>Mozilla 1.0</td>
+                      <td>Win 95+ / OSX.1+</td>
+                      <td>1</td>
+                      <td>A</td>
+                    </tr> -->
+                  </tbody>
+                    <tfoot>
+                    <tr><th rowspan="1" colspan="1">S.No.</th>
+                      <th rowspan="1" colspan="1">Title</th>
+                      <th rowspan="1" colspan="1">Status</th>
+                      <th rowspan="1" colspan="1">Delete</th>
+                    </tr>
+                    </tfoot>
+                  </table></div></div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+  
+              
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('footer.ejs'); %>  
+  
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark" style="display: none;">
+      <!-- Control sidebar content goes here -->
+    <div class="p-3 control-sidebar-content" style=""><h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Dark Mode</span></div><h6>Header Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Dropdown Legacy Offset</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>No border</span></div><h6>Sidebar Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Collapsed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" checked="checked" class="mr-1"><span>Sidebar Mini</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini MD</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini XS</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Flat Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Legacy Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Hide on Collapse</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Disable Hover/Focus Auto-Expand</span></div><h6>Footer Options</h6><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><h6>Small Text Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Body</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Navbar</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Brand</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Nav</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Footer</span></div><h6>Navbar Variants</h6><div class="d-flex"><select class="custom-select mb-3 text-light border-0 bg-white"><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option></select></div><h6>Accent Color Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 text-light border-0 bg-primary"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Light Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Brand Logo Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option><a href="#">clear</a></select></div></aside>
+    <!-- /.control-sidebar -->
+  <div id="sidebar-overlay"></div></div>
+  <!-- ./wrapper -->
+  
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../plugins/jszip/jszip.min.js"></script>
+  <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
+  
+  </body></html>

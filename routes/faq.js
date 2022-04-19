@@ -1,0 +1,10 @@
+var express = require('express');
+var router = express.Router();
+const faq = require("../controllers/faq");
+const {verifyAuth} = require('../middleware/auth');
+router.get('/',verifyAuth,faq.faqList);
+router.get('/edit/:id',verifyAuth,faq.faqEdit);
+router.post('/',verifyAuth,faq.faqSave);
+router.get('/delete/:id',verifyAuth,faq.faqDelete);
+router.get('/create',verifyAuth,faq.faqCreate);
+module.exports = router;

@@ -1,0 +1,10 @@
+var express = require('express');
+var router = express.Router();
+const translation = require("../controllers/translation");
+const {verifyAuth} = require('../middleware/auth');
+router.get('/',verifyAuth,translation.translationList);
+router.get('/edit/:id',verifyAuth,translation.translationEdit);
+router.post('/',verifyAuth,translation.translationSave);
+// router.get('/delete/:id',verifyAuth,faq.faqDelete);
+router.get('/create',verifyAuth,translation.translationCreate);
+module.exports = router;
